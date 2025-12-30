@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheikh Mubarak’s Kiosk: AR Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+        body { font-family: 'Montserrat', sans-serif; background-color: #faf9f6; color: #1a1a1a; }
+        h1, h2, h3 { font-family: 'Cinzel', serif; color: #af8d1d; }
+        .scene-container { border-bottom: 1px solid #eee; padding-bottom: 4rem; margin-bottom: 4rem; }
+        /* Adjusted to 16:9 Ratio for cinematic look */
+        .visual-frame { width: 100%; aspect-ratio: 16 / 9; background: #f0f0f0; border-radius: 8px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd; overflow: hidden; position: relative; }
+        .visual-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .timestamp { background: #af8d1d; color: white; padding: 4px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        .narration-box { background: #fcfbf8; border-left: 4px solid #af8d1d; padding: 1.5rem; margin-top: 1rem; }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <nav class="max-w-4xl mx-auto mb-6">
+        <a href="index.html" class="inline-flex items-center text-sm font-semibold text-gray-500 hover:text-[#af8d1d] transition-colors">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Back to Dashboard
+        </a>
+    </nav>
+
+    <div class="max-w-4xl mx-auto mb-8 flex justify-center gap-4">
+        <button id="btn-v1" onclick="switchVersion(1)" class="ver-btn px-6 py-2 rounded-full font-bold shadow-sm transition-all bg-[#af8d1d] text-white border border-[#af8d1d]">Visual Concept I</button>
+        <button id="btn-v2" onclick="switchVersion(2)" class="ver-btn px-6 py-2 rounded-full font-bold shadow-sm transition-all bg-white text-gray-600 hover:bg-gray-50 border border-gray-200">Visual Concept II</button>
+        <button id="btn-v3" onclick="switchVersion(3)" class="ver-btn px-6 py-2 rounded-full font-bold shadow-sm transition-all bg-white text-gray-600 hover:bg-gray-50 border border-gray-200">Visual Concept III</button>
+    </div>
+
+    <header class="max-w-4xl mx-auto text-center mb-20">
+        <h1 class="text-4xl md:text-6xl mb-4">Sheikh Mubarak’s Kiosk</h1>
+        <p class="text-xl uppercase tracking-widest text-gray-500">Augmented Reality Experience Concept</p>
+    </header>
+
+    <main class="max-w-4xl mx-auto">
+
+        <!-- SCENE 1 -->
+        <div class="scene-container">
+            <div class="visual-frame">
+                <img src="Scene_Art_V1/scene_01.png" alt="Concept Visual 1: Golden Tracing">
+            </div>
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-2xl font-bold">Chapter 1: Arrival & Discovery</h2>
+                <span class="timestamp">0:00 - 0:23</span>
+            </div>
+            <div class="narration-box">
+                <p class="italic">“In a quiet corner of Kuwait’s old city…”</p>
+            </div>
+            <p class="mt-4 text-gray-700 leading-relaxed">The experience awakens with soft animated dust. A semi-transparent golden light outline elegantly traces the real kiosk's edges. Text appears identifying the site: <strong>Sheikh Mubarak’s Kiosk, Kuwait</strong>.</p>
+        </div>
+
+        <!-- SCENE 2 -->
+        <div class="scene-container">
+            <div class="visual-frame">
+                <img src="Scene_Art_V1/scene_02.png" alt="Concept Visual 2: Time Ripple">
+            </div>
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-2xl font-bold">Chapter 2: Time Transition (1897)</h2>
+                <span class="timestamp">0:23 - 0:40</span>
+            </div>
+            <div class="narration-box">
+                <p class="italic">“The story begins in 1897…”</p>
+            </div>
+            <p class="mt-4 text-gray-700 leading-relaxed">The date '1897' appears as a ripple wave transforms the world. Modern colors shift into warm sepia and sand, while historical map lines faintly overlay the ground.</p>
+        </div>
+
+        <!-- SCENE 3 -->
+        <div class="scene-container">
+            <div class="visual-frame">
+                <img src="Scene_Art_V1/scene_03.png" alt="Concept Visual 3: Balcony Silhouettes">
+            </div>
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-2xl font-bold">Chapter 3: Purpose of the Kiosk</h2>
+                <span class="timestamp">0:40 - 0:55</span>
+            </div>
+            <div class="narration-box">
+                <p class="italic">“Designed as a place for governance and connection...”</p>
+            </div>
+            <p class="mt-4 text-gray-700 leading-relaxed">The Sheikh’s silhouette appears on the balcony as ghostly figures approach the door below. Shadowy guards stand at the entrance, all rendered in a mystical, abstract style.</p>
+        </div>
+
+        <!-- SCENE 4 -->
+        <div class="scene-container">
+            <div class="visual-frame">
+                <img src="Scene_Art_V1/scene_04.png" alt="Concept Visual 4: Architecture Labels">
+            </div>
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-2xl font-bold">Chapter 4: Architecture & Environment</h2>
+                <span class="timestamp">0:55 - 1:12</span>
+            </div>
+            <div class="narration-box">
+                <p class="italic">“Its simple yet strategic architecture…”</p>
+            </div>
+            <p class="mt-4 text-gray-700 leading-relaxed">Floating architectural labels highlight the thick stone walls and high ceilings. In the background, ghostly Dhow boats appear in the distant AR sky.</p>
+        </div>
+
+        <!-- SCENE 5 -->
+        <div class="scene-container">
+            <div class="visual-frame">
+                <img src="Scene_Art_V1/scene_05.png" alt="Concept Visual 5: Trade Map">
+            </div>
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-2xl font-bold">Chapter 5: Governance in Action</h2>
+                <span class="timestamp">1:12 - 1:32</span>
+            </div>
+            <div class="narration-box">
+                <p class="italic">“Inside, Sheikh Mubarak would sit daily…”</p>
+            </div>
+            <p class="mt-4 text-gray-700 leading-relaxed">A merchant approaches for discussion as a map of Kuwait with glowing trade routes appears on the floor, accompanied by the subtle sounds of a busy market.</p>
+        </div>
+
+        <!-- SCENE 6 -->
+        <div class="scene-container">
+            <div class="visual-frame">
+                <img src="Scene_Art_V1/scene_06.png" alt="Concept Visual 6: Floating Wisdom">
+            </div>
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-2xl font-bold">Chapter 6: Symbol of Leadership</h2>
+                <span class="timestamp">1:32 - 1:48</span>
+            </div>
+            <div class="narration-box">
+                <p class="italic">“This was not merely an administrative building…”</p>
+            </div>
+            <p class="mt-4 text-gray-700 leading-relaxed">The kiosk is bathed in a soft golden aura. Floating words—<strong>Leadership</strong>, <strong>Wisdom</strong>, and <strong>Connection</strong>—appear and dissolve gently into the structure.</p>
+        </div>
+
+        <!-- SCENE 7 -->
+        <div class="scene-container">
+            <div class="visual-frame">
+                <img src="Scene_Art_V1/scene_07.png" alt="Concept Visual 7: Flag Reflections">
+            </div>
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-2xl font-bold">Chapter 7: Then & Now</h2>
+                <span class="timestamp">1:40 - 2:10</span>
+            </div>
+            <div class="narration-box">
+                <p class="italic">“Over time… this small structure became a powerful symbol.”</p>
+            </div>
+            <p class="mt-4 text-gray-700 leading-relaxed">The world blends back to the present day. Subtle reflections of red, green, and white light dance across the stone, honoring the Kuwaiti flag.</p>
+        </div>
+
+        <!-- SCENE 8 -->
+        <div class="scene-container">
+            <div class="visual-frame">
+                <img src="Scene_Art_V1/scene_08.png" alt="Concept Visual 8: Final Outline">
+            </div>
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-2xl font-bold">Chapter 8: Closing Moment</h2>
+                <span class="timestamp">2:10 - End</span>
+            </div>
+            <div class="narration-box">
+                <p class="italic">“A history that remains alive…”</p>
+            </div>
+            <p class="mt-4 text-gray-700 leading-relaxed">Effects fade, leaving the real kiosk. A final golden outline traces the building for ten seconds, a lasting tribute to its historical significance.</p>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-12 text-gray-400 text-sm">
+        Sheikh Mubarak’s Kiosk AR | Experience Blueprint 2025
+    </footer>
+
+    <script>
+        /* *********************************************************
+           Module 1.1.0 : Script Finalization
+           Description: Synchronized with 16:9 cinematic aspect ratio.
+           ************************************************************/
+        console.log("Client presentation version 2.1.0 (16:9) loaded.");
+
+        const sceneFiles = [
+            "scene_01.png", "scene_02.png", "scene_03.png", "scene_04.png",
+            "scene_05.png", "scene_06.png", "scene_07.png", "scene_08.png"
+        ];
+
+        function switchVersion(ver) {
+            const folder = `Scene_Art_V${ver}`;
+            const images = document.querySelectorAll('.visual-frame img');
+            
+            images.forEach((img, index) => {
+                if (sceneFiles[index]) {
+                    img.src = `${folder}/${sceneFiles[index]}`;
+                }
+            });
+
+            document.querySelectorAll('.ver-btn').forEach(btn => {
+                btn.classList.remove('bg-[#af8d1d]', 'text-white');
+                btn.classList.add('bg-white', 'text-gray-600');
+            });
+            const activeBtn = document.getElementById(`btn-v${ver}`);
+            activeBtn.classList.remove('bg-white', 'text-gray-600');
+            activeBtn.classList.add('bg-[#af8d1d]', 'text-white');
+        }
+    </script>
+</body>
+</html>

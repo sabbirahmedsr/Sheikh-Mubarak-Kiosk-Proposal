@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Guide: Sheikh Mubarak’s Kiosk AR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        :root { --gold: #d4af37; --bg: #0f172a; --card-bg: rgba(30, 41, 59, 0.4); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: #f1f5f9; }
+        h1, h2, h3 { font-family: 'Cinzel', serif; color: var(--gold); }
+        
+        .master-prompt-box { background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(15, 23, 42, 0) 100%); border: 2px solid var(--gold); padding: 2rem; border-radius: 1rem; margin-bottom: 4rem; }
+        .master-tag { background: var(--gold); color: #000; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 1rem; display: inline-block; }
+        
+        .tech-card { background: var(--card-bg); border-left: 4px solid var(--gold); margin-bottom: 4rem; padding: 2rem; border-radius: 0 0.5rem 0.5rem 0; }
+        
+        .raw-requirement { 
+            background: #0a0f1d; 
+            border: 1px solid #1e293b; 
+            padding: 1.5rem; 
+            border-radius: 0.5rem; 
+            font-family: 'Inter', sans-serif; 
+            font-size: 0.92rem; 
+            line-height: 1.6; 
+            color: #94a3b8; 
+            white-space: pre-wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .data-header { color: #475569; font-size: 0.7rem; letter-spacing: 2px; font-weight: bold; display: block; margin-bottom: 10px; text-transform: uppercase; border-bottom: 1px solid #1e293b; padding-bottom: 4px; }
+        .time-text { color: #cbd5e1; font-weight: 600; }
+        .narration-text { color: #cbd5e1; font-style: italic; display: block; margin: 5px 0; }
+        .overlay-text { color: #cbd5e1; }
+        .label-style { color: #64748b; font-size: 0.85rem; font-weight: 500; }
+
+        .visual-reference { width: 100%; aspect-ratio: 16 / 9; background: #000; display: flex; align-items: center; justify-content: center; border-radius: 0.5rem; margin-bottom: 1.5rem; border: 1px solid #334155; color: #475569; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem; }
+        
+        .prompt-container { background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 1.25rem; border-radius: 0.5rem; color: #94a3b8; margin-bottom: 1.5rem; border-left: 4px solid #475569; }
+        .prompt-container strong { color: var(--gold); font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 0.5rem; }
+        
+        .unity-integration { background: rgba(212, 175, 55, 0.05); border: 1px dashed var(--gold); padding: 1.5rem; border-radius: 0.5rem; }
+        .unity-integration h4 { color: var(--gold); font-size: 0.85rem; text-transform: uppercase; font-weight: 700; margin-bottom: 1rem; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 5px; }
+        
+        .integration-section { margin-bottom: 1.5rem; }
+        .integration-section:last-child { margin-bottom: 0; }
+        .integration-section label { display: block; color: #64748b; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; margin-bottom: 0.75rem; letter-spacing: 1px; }
+        
+        .method-tag { background: #1e293b; color: var(--gold); padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-right: 8px; text-transform: uppercase; display: inline-block; margin-bottom: 6px; border: 1px solid rgba(212, 175, 55, 0.2); }
+        .asset-list { font-size: 0.85rem; color: #cbd5e1; list-style-type: none; padding-left: 0; }
+        .asset-list li { margin-bottom: 6px; display: block; line-height: 1.4; }
+        .asset-list li b { color: var(--gold); font-size: 0.8rem; text-transform: uppercase; margin-right: 6px; }
+        .asset-list li span { color: #94a3b8; font-size: 0.8rem; }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+
+    <div class="max-w-5xl mx-auto mb-8 flex justify-center gap-4">
+        <button id="btn-v1" onclick="switchVersion(1)" class="ver-btn px-6 py-2 rounded-full font-bold shadow-sm transition-all bg-[#d4af37] text-black border border-[#d4af37]">Visual Concept I</button>
+        <button id="btn-v2" onclick="switchVersion(2)" class="ver-btn px-6 py-2 rounded-full font-bold shadow-sm transition-all bg-transparent text-gray-400 border border-gray-700 hover:border-[#d4af37] hover:text-[#d4af37]">Visual Concept II</button>
+        <button id="btn-v3" onclick="switchVersion(3)" class="ver-btn px-6 py-2 rounded-full font-bold shadow-sm transition-all bg-transparent text-gray-400 border border-gray-700 hover:border-[#d4af37] hover:text-[#d4af37]">Visual Concept III</button>
+    </div>
+
+    <header class="max-w-5xl mx-auto mb-16 border-b border-gray-700 pb-8">
+        <h1 class="text-3xl md:text-5xl mb-2 uppercase tracking-tighter">Technical Implementation Guide</h1>
+        <p class="text-gray-400">Unity Mobile AR Strategy & Asset Requirements</p>
+    </header>
+
+    <main class="max-w-5xl mx-auto">
+
+        <!-- GLOBAL MASTER PROMPT BLOCK -->
+        <section class="master-prompt-box">
+            <span class="master-tag">Master Project Perspective</span>
+            <h3 class="text-xl text-white mb-4">Initial Setup for AI Image Generators</h3>
+            <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                Copy and paste this section as your first interaction with the AI. This establishes the camera height, architectural style (aligned with 3D scans), and Unity technical constraints.
+            </p>
+            <div class="raw-requirement">
+<span class="label-style">Perspective:</span> Mobile AR (Augmented Reality) application view.
+<span class="label-style">Camera:</span> Handheld smartphone height (1.5m), looking slightly upward. Real-time camera feed look with natural daylight.
+<span class="label-style">Subject:</span> Sheikh Mubarak’s Kiosk, Kuwait. Historic two-story white stone structure with a wooden balcony (refer to 3D scans).
+<span class="label-style">Art Style:</span> Unity URP assets: Clean 2D sprites, glowing line-renderers, and minimalist UI text. 
+<span class="label-style">Constraint:</span> Unity-achievable graphics. No over-complex CGI. Focus on clean silhouettes and simple particle effects.</div>
+        </section>
+
+        <!-- SCENE 1 -->
+        <section class="tech-card">
+            <h2 class="text-xl mb-4 text-white">🎬 SCENE 1 — Arrival & Discovery</h2>
+            <img src="Scene_Art_V1/scene_01.png" alt="Mobile View: AR Camera Feed + Gold Outlines" class="visual-reference">
+            
+            <div class="raw-requirement"><span class="data-header">Original Data (Full)</span><span class="label-style">Time:</span> <span class="time-text">0:00 – 0:23</span>
+<span class="label-style">Narration:</span> <span class="narration-text">“In a quiet corner of Kuwait’s old city…”</span>
+<span class="label-style">AR Overlay:</span> 
+<span class="overlay-text">- Soft animated dust particles floating slowly (time awakening effect) 
+- Semi-transparent golden light outline traces the real kiosk 
+- Subtle text appears (minimal, elegant): Sheikh Mubarak’s Kiosk, Kuwait</span>
+<span class="label-style">Design Note:</span> No UI clutter. Let the real building dominate.</div>
+            
+            <div class="prompt-container">
+                <strong>AI Prompt (Stage 1):</strong>
+                "Consistent with Project Perspective: AR mobile view of the kiosk. Add a simple Unity LineRenderer effect tracing the building edges in a 2px glowing gold wireframe. Add a low-density particle system of amber dust circles. Minimalist white text 'Sheikh Mubarak’s Kiosk' at the bottom of the screen."
+            </div>
+
+            <div class="unity-integration">
+                <h4>Unity Technical Workflow</h4>
+                <div class="integration-section">
+                    <label>Methods & Implementation</label>
+                    <span class="method-tag">ARFoundation: ARTrackedImageManager</span>
+                    <span class="method-tag">Unity VFX Graph (Circle Particles)</span>
+                    <span class="method-tag">Standard LineRenderer Component</span>
+                    <span class="method-tag">Additive Glow Shader (URP)</span>
+                </div>
+                <div class="integration-section">
+                    <label>Required Elements & Assets</label>
+                    <ul class="asset-list">
+                        <li><b>Image Marker:</b><span>Upload as a Reference Image to an AR Resource Library to trigger tracking upon detection.</span></li>
+                        <li><b>Dust Prefab:</b><span>A simple Quad with an unlit amber sprite used as a template for the VFX Graph spawn.</span></li>
+                        <li><b>Wireframe Mesh:</b><span>Extracted silhouette mesh from 3D scan used for the LineRenderer positions.</span></li>
+                        <li><b>UI Canvas:</b><span>Screen-Space Overlay with a Vertical Layout Group for consistent text anchoring.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCENE 2 -->
+        <section class="tech-card">
+            <h2 class="text-xl mb-4 text-white">🎬 SCENE 2 — Time Transition (1897)</h2>
+            <img src="Scene_Art_V1/scene_02.png" alt="Mobile View: Sepia Color Grade + Date Overlay" class="visual-reference">
+            
+            <div class="raw-requirement"><span class="data-header">Original Data (Full)</span><span class="label-style">Time:</span> <span class="time-text">0:23 – 0:40</span>
+<span class="label-style">Narration:</span> <span class="narration-text">“The story begins in 1897…”</span>
+<span class="label-style">AR Overlay:</span> 
+<span class="overlay-text">- Floating date appears briefly: 1897 
+- Time ripple effect (gentle wave passes over the building) 
+- Color grading shifts: Modern tones → sepia / warm sand 
+- Old-style map lines faintly overlay the ground</span>
+<span class="label-style">Visual Signal:</span> Signals historical immersion and time travel.</div>
+
+            <div class="prompt-container">
+                <strong>AI Prompt (Stage 2):</strong>
+                "Consistent with Project Perspective: Transition the mobile view to a warm sepia color grade. Overlay a large, static '1897' in a vintage font. On the ground, project a flat 2D map texture. Include a semi-transparent ripple wave shader effect passing across the frame."
+            </div>
+
+            <div class="unity-integration">
+                <h4>Unity Technical Workflow</h4>
+                <div class="integration-section">
+                    <label>Methods & Implementation</label>
+                    <span class="method-tag">URP Post-Processing Volume (Color Adjustments)</span>
+                    <span class="method-tag">Shader Graph: Screen-Space Ripple</span>
+                    <span class="method-tag">URP Decal Projector Component</span>
+                    <span class="method-tag">Timeline (Sync Overlay with Ripple)</span>
+                </div>
+                <div class="integration-section">
+                    <label>Required Elements & Assets</label>
+                    <ul class="asset-list">
+                        <li><b>Sepia LUT:</b><span>Imported Texture for the Color Lookup override in the URP Post-Process Volume.</span></li>
+                        <li><b>TextMeshPro Asset:</b><span>SDF font generated from a vintage-style typeface for high-clarity zooming.</span></li>
+                        <li><b>Historical Map Texture:</b><span>Alpha-transparent PNG projected onto the ground using a Decal Projector.</span></li>
+                        <li><b>Ripple Normal Map:</b><span>Seamless tiling normal map used by the Screen-Space Shader Graph for distortion.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCENE 3 -->
+        <section class="tech-card">
+            <h2 class="text-xl mb-4 text-white">🎬 SCENE 3 — Purpose of the Kiosk</h2>
+            <img src="Scene_Art_V1/scene_03.png" alt="Mobile View: Silhouettes + Mesh Occlusion" class="visual-reference">
+            
+            <div class="raw-requirement"><span class="data-header">Original Data (Full)</span><span class="label-style">Time:</span> <span class="time-text">0:40 – 0:55</span>
+<span class="label-style">Narration:</span> <span class="narration-text">“This building was the center of governance…”</span>
+<span class="label-style">AR Overlay:</span> 
+<span class="overlay-text">- Ethereal silhouettes appear: Sheikh Mubarak at the balcony, Guards standing at the entrance 
+- Silhouettes appear behind building railings (Depth Occlusion)</span></div>
+
+            <div class="prompt-container">
+                <strong>AI Prompt (Stage 3):</strong>
+                "Consistent with Project Perspective: Mobile view focusing on the kiosk balcony. Render a flat 2D golden silhouette of a man. Ensure the silhouette is correctly occluded (hidden) by the kiosk railing geometry to simulate real depth in AR."
+            </div>
+
+            <div class="unity-integration">
+                <h4>Unity Technical Workflow</h4>
+                <div class="integration-section">
+                    <label>Methods & Implementation</label>
+                    <span class="method-tag">Custom Occluder Shader (Write to Z-Buffer only)</span>
+                    <span class="method-tag">Billboard Sprite Renderer (Transparent/Cutout)</span>
+                    <span class="method-tag">AR Mesh Occlusion (if using LiDAR/Meshing)</span>
+                </div>
+                <div class="integration-section">
+                    <label>Required Elements & Assets</label>
+                    <ul class="asset-list">
+                        <li><b>Proxy Occluder Mesh:</b><span>Simplified 3D railing model that is invisible but blocks rendering of sprites behind it.</span></li>
+                        <li><b>Silhouette Atlas:</b><span>Collection of character poses in one texture for optimized sprite rendering.</span></li>
+                        <li><b>Occlusion Material:</b><span>URP material using a Depth-Only shader to handle spatial layering correctly.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCENE 4 -->
+        <section class="tech-card">
+            <h2 class="text-xl mb-4 text-white">🎬 SCENE 4 — Architecture & Environment</h2>
+            <img src="Scene_Art_V1/scene_04.png" alt="Mobile View: Floating Labels & Distant Objects" class="visual-reference">
+            
+            <div class="raw-requirement"><span class="data-header">Original Data (Full)</span><span class="label-style">Time:</span> <span class="time-text">0:55 – 1:12</span>
+<span class="label-style">Narration:</span> <span class="narration-text">“Its simple yet strategic architecture…”</span>
+<span class="label-style">AR Overlay:</span> 
+<span class="overlay-text">- Floating text labels: "Thick Stone Walls", "High Ceilings" 
+- Distant ghostly Dhow boats appearing in the AR sky 
+- Wind sound effect through the wooden balcony</span></div>
+
+            <div class="prompt-container">
+                <strong>AI Prompt (Stage 4):</strong>
+                "Consistent with Project Perspective: Mobile AR view. Floating architectural labels in a clean white font point to the kiosk walls. In the far distance over the digital horizon, render a few low-opacity 2D dhow boats drifting in the sky."
+            </div>
+
+            <div class="unity-integration">
+                <h4>Unity Technical Workflow</h4>
+                <div class="integration-section">
+                    <label>Methods & Implementation</label>
+                    <span class="method-tag">World-Space Canvas (Face Camera)</span>
+                    <span class="method-tag">Skybox/Distance Layer Sorting</span>
+                    <span class="method-tag">Spatial Audio (Balcony Node)</span>
+                </div>
+                <div class="integration-section">
+                    <label>Required Elements & Assets</label>
+                    <ul class="asset-list">
+                        <li><b>Label Prefab:</b><span>TextMeshPro component with a "Face Camera" billboard script for legibility.</span></li>
+                        <li><b>Dhow Sprite:</b><span>Low-opacity PNG placed on a distant layer beyond the building's mesh.</span></li>
+                        <li><b>Wind Loop:</b><span>Environmental audio file set to loop and play from the balcony coordinates.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCENE 5 -->
+        <section class="tech-card">
+            <h2 class="text-xl mb-4 text-white">🎬 SCENE 5 — Governance in Action</h2>
+            <img src="Scene_Art_V1/scene_05.png" alt="Mobile View: Floor Map Projector" class="visual-reference">
+            
+            <div class="raw-requirement"><span class="data-header">Original Data (Full)</span><span class="label-style">Time:</span> <span class="time-text">1:12 – 1:32</span>
+<span class="label-style">Narration:</span> <span class="narration-text">“Inside, Sheikh Mubarak would sit daily…”</span>
+<span class="label-style">AR Overlay:</span> 
+<span class="overlay-text">- Minimal animated actions: Merchant silhouette approaching, Gesture of discussion 
+- Map of Kuwait with trade routes briefly appearing 
+- Ambient market sound increases slightly</span></div>
+
+            <div class="prompt-container">
+                <strong>AI Prompt (Stage 5):</strong>
+                "Consistent with Project Perspective: AR floor projection. A simple glowing blue map texture on the pavement in front of the kiosk. Two golden-tinted silhouettes stand atop the map. High contrast between the real-world street and the digital projection."
+            </div>
+
+            <div class="unity-integration">
+                <h4>Unity Technical Workflow</h4>
+                <div class="integration-section">
+                    <label>Methods & Implementation</label>
+                    <span class="method-tag">URP Decal (DBuffer) Projection</span>
+                    <span class="method-tag">AudioSource: 3D Spatial Blend</span>
+                    <span class="method-tag">Animated UV Offset for Trade Routes</span>
+                </div>
+                <div class="integration-section">
+                    <label>Required Elements & Assets</label>
+                    <ul class="asset-list">
+                        <li><b>Trade Route Map:</b><span>Vector-exported texture set to "Decal" material type to wrap onto sidewalk pavement.</span></li>
+                        <li><b>Merchant Sprites:</b><span>Billboarded 2D animations that follow a C# pathing script to approach the door.</span></li>
+                        <li><b>Ambient Audio:</b><span>Ogg Vorbis file with "3D Spatial Blend" set to 1, located at the kiosk entrance.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCENE 6 -->
+        <section class="tech-card">
+            <h2 class="text-xl mb-4 text-white">🎬 SCENE 6 — Symbol of Leadership</h2>
+            <img src="Scene_Art_V1/scene_06.png" alt="Mobile View: Floating Particles & Aura" class="visual-reference">
+            
+            <div class="raw-requirement"><span class="data-header">Original Data (Full)</span><span class="label-style">Time:</span> <span class="time-text">1:32 – 1:48</span>
+<span class="label-style">Narration:</span> <span class="narration-text">“This was not merely an administrative building…”</span>
+<span class="label-style">AR Overlay:</span> 
+<span class="overlay-text">- Kiosk bathed in a soft golden aura (bloom effect) 
+- Floating words appear and dissolve: Leadership, Wisdom, Connection 
+- Particles rise slowly from the base of the structure</span></div>
+
+            <div class="prompt-container">
+                <strong>AI Prompt (Stage 6):</strong>
+                "Consistent with Project Perspective: The kiosk glows with a soft golden bloom. Add floating white text 'Leadership', 'Wisdom', and 'Connection' in a vertical column, slowly drifting upward. Subtle upward-moving golden particle system at the building base."
+            </div>
+
+            <div class="unity-integration">
+                <h4>Unity Technical Workflow</h4>
+                <div class="integration-section">
+                    <label>Methods & Implementation</label>
+                    <span class="method-tag">URP Bloom (Volume Override)</span>
+                    <span class="method-tag">TextMeshPro Fade Animation (C# Lerp)</span>
+                    <span class="method-tag">Unity VFX Graph (Upward Drift)</span>
+                </div>
+                <div class="integration-section">
+                    <label>Required Elements & Assets</label>
+                    <ul class="asset-list">
+                        <li><b>Word Sprites:</b><span>Alpha-clipped TextMeshPro assets with a custom script for alpha-fading logic.</span></li>
+                        <li><b>Aura Material:</b><span>Additive shader applied to a proxy mesh slightly larger than the kiosk 3D scan.</span></li>
+                        <li><b>Rise Particles:</b><span>Point-emitter particle prefab set to world-space for realistic upward movement.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCENE 7 -->
+        <section class="tech-card">
+            <h2 class="text-xl mb-4 text-white">🎬 SCENE 7 — Then & Now</h2>
+            <img src="Scene_Art_V1/scene_07.png" alt="Mobile View: Transitioning Colors" class="visual-reference">
+            
+            <div class="raw-requirement"><span class="data-header">Original Data (Full)</span><span class="label-style">Time:</span> <span class="time-text">1:40 – 2:10</span>
+<span class="label-style">Narration:</span> <span class="narration-text">“Over time… this small structure became a powerful symbol.”</span>
+<span class="label-style">AR Overlay:</span> 
+<span class="overlay-text">- Seamless blend back to present day 
+- Kuwaiti flag colors subtly reflected as light (not literal flag) on the building surface</span></div>
+
+            <div class="prompt-container">
+                <strong>AI Prompt (Stage 7):</strong>
+                "Consistent with Project Perspective: Fade out the sepia filter back to natural colors. Apply three soft colored spotlights (red, green, white) to the building surface, simulating the colors of the Kuwait flag through lighting rather than graphics."
+            </div>
+
+            <div class="unity-integration">
+                <h4>Unity Technical Workflow</h4>
+                <div class="integration-section">
+                    <label>Methods & Implementation</label>
+                    <span class="method-tag">C# Script: Lerp Post-Process Weight</span>
+                    <span class="method-tag">Timeline Light Intensity Animation</span>
+                    <span class="method-tag">Custom Additive Spotlight Shaders</span>
+                </div>
+                <div class="integration-section">
+                    <label>Required Elements & Assets</label>
+                    <ul class="asset-list">
+                        <li><b>Light Rig Prefab:</b><span>Grouped Spotlights with custom intensity curves controlled by Unity Timeline.</span></li>
+                        <li><b>Color Palette:</b><span>Specific HEX codes defined in a Global Settings script for brand consistency.</span></li>
+                        <li><b>Neutral Volume:</b><span>Post-process profile with zero saturation applied during the final transition.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCENE 8 -->
+        <section class="tech-card">
+            <h2 class="text-xl mb-4 text-white">🎬 SCENE 8 — Closing Moment</h2>
+            <img src="Scene_Art_V1/scene_08.png" alt="Mobile View: Final Gold Outline" class="visual-reference">
+            
+            <div class="raw-requirement"><span class="data-header">Original Data (Full)</span><span class="label-style">Time:</span> <span class="time-text">2:10 – End</span>
+<span class="label-style">Narration:</span> <span class="narration-text">“A history that remains alive…”</span>
+<span class="label-style">AR Overlay:</span> 
+<span class="overlay-text">- Most effects fade, leaving only the real kiosk 
+- One final golden outline traces the building for 10 seconds 
+- Fade to black (UI) with app logo / credits</span></div>
+
+            <div class="prompt-container">
+                <strong>AI Prompt (Stage 8):</strong>
+                "Consistent with Project Perspective: Fade all particles and projections. Bring back the Scene 1 golden LineRenderer outline for a final 10-second highlight. Transition to a solid black screen with a centered 'Kuwait Heritage' logo."
+            </div>
+
+            <div class="unity-integration">
+                <h4>Unity Technical Workflow</h4>
+                <div class="integration-section">
+                    <label>Methods & Implementation</label>
+                    <span class="method-tag">Timeline (End Sequence Control)</span>
+                    <span class="method-tag">Canvas Group Alpha Fade</span>
+                    <span class="method-tag">Global Singleton: Scene Manager</span>
+                </div>
+                <div class="integration-section">
+                    <label>Required Elements & Assets</label>
+                    <ul class="asset-list">
+                        <li><b>Logo Sprite:</b><span>App branding for the final overlay screen.</span></li>
+                        <li><b>Fade Image:</b><span>Full-screen black UI element for the final transition.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        /* *********************************************************
+           Module 1.8.0 : Total Scene Restoration
+           Description: Full synchronization of all 8 scenes.
+           Maintains compact asset layout while preserving 100% 
+           of the original narrative and technical data.
+           ************************************************************/
+        console.log("Technical Guide version 1.8.0 (100% Data Restoration) loaded.");
+
+        const sceneFiles = [
+            "scene_01.png", "scene_02.png", "scene_03.png", "scene_04.png",
+            "scene_05.png", "scene_06.png", "scene_07.png", "scene_08.png"
+        ];
+
+        function switchVersion(ver) {
+            const folder = `Scene_Art_V${ver}`;
+            const images = document.querySelectorAll('img.visual-reference');
+            
+            images.forEach((img, index) => {
+                if (sceneFiles[index]) {
+                    img.src = `${folder}/${sceneFiles[index]}`;
+                }
+            });
+
+            document.querySelectorAll('.ver-btn').forEach(btn => {
+                btn.classList.remove('bg-[#d4af37]', 'text-black');
+                btn.classList.add('bg-transparent', 'text-gray-400', 'border-gray-700');
+            });
+            const activeBtn = document.getElementById(`btn-v${ver}`);
+            activeBtn.classList.remove('bg-transparent', 'text-gray-400', 'border-gray-700');
+            activeBtn.classList.add('bg-[#d4af37]', 'text-black');
+        }
+    </script>
+</body>
+</html>
