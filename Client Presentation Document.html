@@ -177,7 +177,18 @@
             "scene_05.png", "scene_06.png", "scene_07.png", "scene_08.png"
         ];
 
+        // Load saved version on startup
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedVer = localStorage.getItem("selected_visual_version");
+            if (savedVer) {
+                switchVersion(savedVer);
+            }
+        });
+
         function switchVersion(ver) {
+            // Save selection to localStorage
+            localStorage.setItem("selected_visual_version", ver);
+
             const folder = `Scene_Art_V${ver}`;
             const images = document.querySelectorAll('.visual-frame img');
             
@@ -192,8 +203,10 @@
                 btn.classList.add('bg-white', 'text-gray-600');
             });
             const activeBtn = document.getElementById(`btn-v${ver}`);
-            activeBtn.classList.remove('bg-white', 'text-gray-600');
-            activeBtn.classList.add('bg-[#af8d1d]', 'text-white');
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-gray-600');
+                activeBtn.classList.add('bg-[#af8d1d]', 'text-white');
+            }
         }
     </script>
 </body>
