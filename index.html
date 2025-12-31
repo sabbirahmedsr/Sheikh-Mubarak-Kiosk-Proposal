@@ -3,49 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Dashboard: Sheikh Mubarak’s Kiosk AR</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Sheikh Mubarak’s Kiosk AR | Project Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel:wght@700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #1e293b; }
-        h1 { font-family: 'Cinzel', serif; color: #1e293b; }
-        .card { transition: all 0.3s ease; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        :root {
+            --primary-gold: #C5A059;
+            --secondary-gold: #E5C585;
+            --bg-main: #FDFBF7;
+            --bg-card: #FFFFFF;
+            --text-main: #2A2A2A;
+            --text-muted: #666666;
+            --accent: #1A2634; /* Deep Royal Blue */
+            --shadow: rgba(197, 160, 89, 0.15);
+            --border-color: rgba(197, 160, 89, 0.3);
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: radial-gradient(var(--primary-gold) 0.5px, transparent 0.5px);
+            background-size: 30px 30px;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: var(--accent);
+            margin: 0 0 10px 0;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-family: 'Amiri', serif;
+            font-size: 1.4rem;
+            color: var(--primary-gold);
+            font-style: italic;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
+            width: 200px;
+            margin: 20px auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 30px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--primary-gold);
+            transition: height 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(197, 160, 89, 0.25);
+            border-color: var(--primary-gold);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: var(--primary-gold);
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin: 0 0 10px 0;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .card-meta {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-gold);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-meta::after {
+            content: '→';
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-meta::after {
+            transform: translateX(5px);
+        }
+
+        /* Specific Styles for Presentation Cards */
+        .card.presentation {
+            background: linear-gradient(135deg, #fff 0%, #fdfbf7 100%);
+            border: 1px solid var(--primary-gold);
+        }
+        
+        .card.presentation h2 {
+            color: #B8860B;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-6">
-    <div class="max-w-4xl w-full">
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-slate-800">Sheikh Mubarak’s Kiosk AR</h1>
-            <p class="text-slate-500 text-lg">Project Documentation Hub</p>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Sheikh Mubarak’s Kiosk</h1>
+            <div class="divider"></div>
+            <div class="subtitle">Augmented Reality Project Dashboard</div>
         </header>
         
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="grid">
             <!-- Project Analysis -->
-            <a href="Project Analysis.html" class="card block bg-white p-6 rounded-xl border border-slate-200 hover:border-amber-500 group">
-                <div class="h-12 w-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-amber-500 transition-colors">
-                    <svg class="w-6 h-6 text-amber-700 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                </div>
-                <h2 class="text-xl font-bold text-slate-800 mb-2">Strategic Analysis</h2>
-                <p class="text-sm text-slate-500">Budget, Timeline, and Risk Assessment.</p>
+            <a href="Project Analysis.html" class="card">
+                <div class="card-icon">📊</div>
+                <h2>Strategic Analysis</h2>
+                <p>Comprehensive breakdown of budget, timeline, risk assessment, and operational strategy.</p>
+                <div class="card-meta">View Document</div>
             </a>
 
             <!-- Technical Guide -->
-            <a href="Technical Implementation Guide.html" class="card block bg-slate-900 p-6 rounded-xl border border-slate-700 hover:border-yellow-500 group">
-                <div class="h-12 w-12 bg-slate-800 rounded-lg flex items-center justify-center mb-4 group-hover:bg-yellow-600 transition-colors">
-                    <svg class="w-6 h-6 text-yellow-500 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                </div>
-                <h2 class="text-xl font-bold text-white mb-2">Technical Guide</h2>
-                <p class="text-sm text-slate-400">Unity Implementation, Shaders, and VFX Logic.</p>
+            <a href="Technical Implementation Guide.html" class="card">
+                <div class="card-icon">⚙️</div>
+                <h2>Technical Guide</h2>
+                <p>Unity implementation details, shader logic, VFX requirements, and asset pipelines.</p>
+                <div class="card-meta">View Guide</div>
             </a>
 
-            <!-- Client Presentation -->
-            <a href="Client Presentation Document.html" class="card block bg-white p-6 rounded-xl border border-slate-200 hover:border-emerald-500 group">
-                <div class="h-12 w-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-500 transition-colors">
-                    <svg class="w-6 h-6 text-emerald-700 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                </div>
-                <h2 class="text-xl font-bold text-slate-800 mb-2">Client Presentation</h2>
-                <p class="text-sm text-slate-500">Narrative Flow, Visual Concepts, and Storyboard.</p>
+            <!-- Client Presentation V1 -->
+            <a href="Client_Presentation_V1.html" class="card presentation">
+                <div class="card-icon">🏛️</div>
+                <h2>Client Presentation V1</h2>
+                <p>Initial concept focusing on historical accuracy and marker-based tracking flow.</p>
+                <div class="card-meta">Launch Presentation</div>
+            </a>
+
+            <!-- Client Presentation V2 -->
+            <a href="Client_Presentation_V2.html" class="card presentation">
+                <div class="card-icon">✨</div>
+                <h2>Client Presentation V2</h2>
+                <p>Refined visual journey with enhanced cinematic storytelling and interactive elements.</p>
+                <div class="card-meta">Launch Presentation</div>
             </a>
         </div>
     </div>

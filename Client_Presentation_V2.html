@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheikh Mubarak’s Kiosk AR | Client Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Royal Sand Theme (Default) */
+            --primary-gold: #C5A059;
+            --secondary-gold: #E5C585;
+            --bg-main: #FDFBF7;
+            --bg-card: #FFFFFF;
+            --text-main: #2A2A2A;
+            --text-muted: #666666;
+            --accent: #1A2634; /* Deep Royal Blue */
+            --shadow: rgba(0,0,0,0.05);
+            --border-color: rgba(197, 160, 89, 0.2);
+            --pattern-opacity: 0.05;
+        }
+
+        [data-theme="dark"] {
+            /* Cinematic Night Theme */
+            --primary-gold: #FFD700;
+            --secondary-gold: #B8860B;
+            --bg-main: #121212;
+            --bg-card: #1E1E1E;
+            --text-main: #E0E0E0;
+            --text-muted: #AAAAAA;
+            --accent: #FFFFFF;
+            --shadow: rgba(0,0,0,0.5);
+            --border-color: rgba(255, 215, 0, 0.1);
+            --pattern-opacity: 0.02;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            background-image: radial-gradient(var(--primary-gold) 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent);
+            margin: 0;
+            transition: color 0.5s ease;
+        }
+
+        .arabic-text {
+            font-family: 'Amiri', serif;
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            padding: 80px 0 40px;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            color: var(--primary-gold);
+            font-style: italic;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
+            width: 60%;
+            margin: 30px auto;
+            position: relative;
+        }
+        
+        .divider::after {
+            content: '❖';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--bg-main);
+            padding: 0 10px;
+            color: var(--primary-gold);
+            font-size: 1.2rem;
+            transition: background-color 0.5s ease;
+        }
+
+        /* Project Specs Grid */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .spec-card {
+            background: var(--bg-card);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            box-shadow: 0 4px 15px var(--shadow);
+            border-radius: 4px;
+            transition: transform 0.3s ease, background-color 0.5s ease;
+        }
+
+        .spec-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-gold);
+        }
+
+        .spec-label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .spec-value {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        /* Timeline Section */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        /* Vertical Line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: var(--primary-gold);
+            transform: translateX(-50%);
+        }
+
+        .scene-row {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .scene-row:nth-child(even) {
+            justify-content: flex-end;
+        }
+
+        .scene-content {
+            width: 45%;
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px var(--shadow);
+            border-top: 3px solid var(--primary-gold);
+            position: relative;
+            transition: background-color 0.5s ease;
+        }
+
+        /* Timeline Dot */
+        .scene-marker {
+            position: absolute;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: var(--bg-main);
+            border: 2px solid var(--primary-gold);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 4px var(--bg-main);
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        
+        .scene-marker::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: var(--primary-gold);
+            border-radius: 50%;
+        }
+
+        .scene-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .scene-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .scene-time {
+            font-family: 'Amiri', serif;
+            color: var(--primary-gold);
+            font-weight: bold;
+        }
+
+        .narration-box {
+            background-color: rgba(197, 160, 89, 0.1);
+            padding: 15px;
+            border-left: 3px solid var(--accent);
+            margin-bottom: 20px;
+            font-family: 'Amiri', serif;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            font-style: italic;
+        }
+        
+        .narration-label {
+            display: block;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            font-style: normal;
+        }
+
+        .ar-details h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--primary-gold);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .ar-details ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .ar-details li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .ar-details li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--primary-gold);
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        /* Visual Summary Footer */
+        .visual-footer {
+            background: var(--accent);
+            color: #fff;
+            padding: 50px;
+            border-radius: 8px;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--primary-gold), var(--secondary-gold), var(--primary-gold));
+        }
+
+        .visual-footer h2 {
+            color: var(--primary-gold);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .style-item h4 {
+            color: var(--secondary-gold);
+            margin-bottom: 10px;
+            font-family: 'Cinzel', serif;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--primary-gold);
+            color: var(--text-main);
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover {
+            background: var(--primary-gold);
+            color: #fff;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .timeline::before { left: 20px; }
+            .scene-row { flex-direction: column !important; margin-left: 50px; }
+            .scene-content { width: auto; }
+            .scene-marker { left: 20px; }
+            header h1 { font-size: 1.8rem; }
+        }
+
+        /* Abstract Royale Shapes */
+        .scene-deco {
+            position: absolute;
+            width: 45%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            pointer-events: none;
+        }
+        
+        .scene-row:nth-child(odd) .scene-deco {
+            right: 0;
+            left: auto;
+            align-items: flex-start;
+            padding-left: 30px;
+        }
+        
+        .scene-row:nth-child(even) .scene-deco {
+            left: 0;
+            right: auto;
+            align-items: flex-end;
+            padding-right: 30px;
+            text-align: left;
+        }
+
+        .raw-req-text {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+            max-width: 100%;
+            border-top: 1px solid var(--primary-gold);
+            padding-top: 8px;
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+        }
+        
+        .raw-req-label {
+            color: var(--primary-gold);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        /* Image Integration */
+        .scene-image-frame {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            overflow: hidden;
+            border-radius: 2px;
+            position: relative;
+        }
+        
+        .scene-image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        
+        .scene-content:hover .scene-image-frame img {
+            transform: scale(1.03);
+        }
+
+        /* Version Controls */
+        .controls-area {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .ver-btn {
+            background: transparent;
+            border: 1px solid var(--primary-gold);
+            color: var(--text-muted);
+            padding: 10px 25px;
+            margin: 0 5px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .ver-btn:hover, .ver-btn.active {
+            background: var(--primary-gold);
+            color: var(--bg-card);
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+    </style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()">🌗 Switch Theme</button>
+<nav style="position: fixed; top: 25px; left: 25px; z-index: 100;">
+    <a href="index.html" style="text-decoration: none; color: var(--text-muted); font-family: 'Lato', sans-serif; font-size: 0.9rem; display: flex; align-items: center; background: var(--bg-card); padding: 8px 15px; border-radius: 30px; border: 1px solid var(--border-color); box-shadow: 0 2px 10px var(--shadow);">
+        <span style="font-size: 1.2rem; margin-right: 5px; line-height: 0.8;">‹</span> Dashboard
+    </a>
+</nav>
+
+<div class="container">
+    <header>
+        <h1>Sheikh Mubarak’s Kiosk</h1>
+        <div class="subtitle">Augmented Reality Experience</div>
+        <div class="divider"></div>
+    </header>
+
+    <div class="controls-area">
+        <button class="ver-btn active" onclick="switchVersion(1)" id="btn-v1">Concept I</button>
+        <button class="ver-btn" onclick="switchVersion(2)" id="btn-v2">Concept II</button>
+        <button class="ver-btn" onclick="switchVersion(3)" id="btn-v3">Concept III</button>
+    </div>
+
+    <div class="specs-grid">
+        <div class="spec-card">
+            <span class="spec-label">Platform</span>
+            <div class="spec-value">Mobile AR (iOS / Android)</div>
+        </div>
+        <div class="spec-card">
+            <span class="spec-label">Mode</span>
+            <div class="spec-value">Marker-based</div>
+        </div>
+        <div class="spec-card">
+            <span class="spec-label">Duration</span>
+            <div class="spec-value">~2:45 Minutes</div>
+        </div>
+        <div class="spec-card">
+            <span class="spec-label">Trigger</span>
+            <div class="spec-value">Scanning an Image</div>
+        </div>
+    </div>
+
+    <div class="timeline">
+        <!-- Scene 1 -->
+        <div class="scene-row">
+            <div class="scene-marker"></div>
+            <div class="scene-deco">
+                <div class="raw-req-text">
+                    <span class="raw-req-label">Raw Requirement Data</span>
+                    Time: 0:00 – 0:23<br>
+                    Narration: “In a quiet corner of Kuwait’s old city…”<br><br>
+                    AR Overlay:<br>
+                    - Soft animated dust particles floating slowly (time awakening effect)<br>
+                    - Semi-transparent golden light outline traces the real kiosk<br>
+                    - Subtle text appears (minimal, elegant):<br>
+                    - Sheikh Mubarak’s Kiosk<br>
+                    - Kuwait<br><br>
+                    Design note: No UI clutter. Let the real building dominate.
+                </div>
+            </div>
+            <div class="scene-content">
+                <div class="scene-image-frame">
+                    <img src="Scene_Art_V1/scene_01.png" alt="Scene 1 Visual" class="scene-img">
+                </div>
+                <div class="scene-header">
+                    <div class="scene-title">SCENE 1 — Arrival & Discovery</div>
+                    <div class="scene-time">0:00 – 0:23</div>
+                </div>
+                <div class="narration-box">
+                    <span class="narration-label">Narration</span>
+                    “In a quiet corner of Kuwait’s old city…”
+                </div>
+                <div class="ar-details">
+                    <h4>AR Overlay</h4>
+                    <ul>
+                        <li>Soft animated dust particles (time awakening effect)</li>
+                        <li>Semi-transparent golden light outline traces the real kiosk</li>
+                        <li>Subtle text: <strong>Sheikh Mubarak’s Kiosk, Kuwait</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 2 -->
+        <div class="scene-row">
+            <div class="scene-marker"></div>
+            <div class="scene-deco">
+                <div class="raw-req-text">
+                    <span class="raw-req-label">Raw Requirement Data</span>
+                    Time: 0:23 – 0:40<br>
+                    Narration: “The story begins in 1897…”<br><br>
+                    AR Overlay:<br>
+                    - Floating date appears briefly: 1897<br>
+                    - Time ripple effect (gentle wave passes over the building)<br>
+                    - Color grading shifts: Modern tones → sepia / warm sand<br>
+                    - Old-style map lines faintly overlay the ground<br><br>
+                    This visually signals historical immersion.
+                </div>
+            </div>
+            <div class="scene-content">
+                <div class="scene-image-frame">
+                    <img src="Scene_Art_V1/scene_02.png" alt="Scene 2 Visual" class="scene-img">
+                </div>
+                <div class="scene-header">
+                    <div class="scene-title">SCENE 2 — Time Transition (1897)</div>
+                    <div class="scene-time">0:23 – 0:40</div>
+                </div>
+                <div class="narration-box">
+                    <span class="narration-label">Narration</span>
+                    “The story begins in 1897…”
+                </div>
+                <div class="ar-details">
+                    <h4>AR Overlay</h4>
+                    <ul>
+                        <li>Floating date appears briefly: <strong>1897</strong></li>
+                        <li>Time ripple effect (gentle wave passes over building)</li>
+                        <li>Color grading shifts: Modern tones → Sepia / Warm Sand</li>
+                        <li>Old-style map lines faintly overlay the ground</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 3 -->
+        <div class="scene-row">
+            <div class="scene-marker"></div>
+            <div class="scene-deco">
+                <div class="raw-req-text">
+                    <span class="raw-req-label">Raw Requirement Data</span>
+                    Time: 0:40 – 0:55<br>
+                    Narration: “He did not seek a grand palace…”<br><br>
+                    AR Overlay:<br>
+                    - Ghosted silhouettes fade in and out: People standing nearby, Sheikh Mubarak standing at door (no facial detail – respectful abstraction)<br><br>
+                    Key message: leadership through proximity, not grandeur.
+                </div>
+            </div>
+            <div class="scene-content">
+                <div class="scene-image-frame">
+                    <img src="Scene_Art_V1/scene_03.png" alt="Scene 3 Visual" class="scene-img">
+                </div>
+                <div class="scene-header">
+                    <div class="scene-title">SCENE 3 — Purpose of the Kiosk</div>
+                    <div class="scene-time">0:40 – 0:55</div>
+                </div>
+                <div class="narration-box">
+                    <span class="narration-label">Narration</span>
+                    “He did not seek a grand palace…”
+                </div>
+                <div class="ar-details">
+                    <h4>AR Overlay</h4>
+                    <ul>
+                        <li>Ghosted silhouettes fade in/out (People nearby)</li>
+                        <li>Sheikh Mubarak standing at door (respectful abstraction)</li>
+                        <li><em>Key message: Leadership through proximity.</em></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 4 -->
+        <div class="scene-row">
+            <div class="scene-marker"></div>
+            <div class="scene-deco">
+                <div class="raw-req-text">
+                    <span class="raw-req-label">Raw Requirement Data</span>
+                    Time: 0:55 – 1:12<br>
+                    Narration: “The kiosk was designed in the traditional Kuwaiti style…”<br><br>
+                    AR Overlay:<br>
+                    - Interactive architectural callouts (fade-in, fade-out): Thick walls → heat protection, Windows → market & sea<br>
+                    - Background AR layers: Moving clouds, Boat sails appear behind building
+                </div>
+            </div>
+            <div class="scene-content">
+                <div class="scene-image-frame">
+                    <img src="Scene_Art_V1/scene_04.png" alt="Scene 4 Visual" class="scene-img">
+                </div>
+                <div class="scene-header">
+                    <div class="scene-title">SCENE 4 — Architecture & Environment</div>
+                    <div class="scene-time">0:55 – 1:12</div>
+                </div>
+                <div class="narration-box">
+                    <span class="narration-label">Narration</span>
+                    “The kiosk was designed in the traditional Kuwaiti style…”
+                </div>
+                <div class="ar-details">
+                    <h4>AR Overlay</h4>
+                    <ul>
+                        <li>Interactive architectural callouts: Thick walls (heat), Windows (market/sea)</li>
+                        <li>Background: Moving clouds, Boat sails appear behind building</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 5 -->
+        <div class="scene-row">
+            <div class="scene-marker"></div>
+            <div class="scene-deco">
+                <div class="raw-req-text">
+                    <span class="raw-req-label">Raw Requirement Data</span>
+                    Time: 1:12 – 1:32<br>
+                    Narration: “Inside, Sheikh Mubarak would sit daily…”<br><br>
+                    AR Overlay:<br>
+                    - Minimal animated actions: Merchant silhouette approaching, Gesture of discussion<br>
+                    - Map of Kuwait with trade routes briefly appearing<br>
+                    - Ambient market sound increases slightly<br><br>
+                    Keep silhouettes abstract—no realism overload.
+                </div>
+            </div>
+            <div class="scene-content">
+                <div class="scene-image-frame">
+                    <img src="Scene_Art_V1/scene_05.png" alt="Scene 5 Visual" class="scene-img">
+                </div>
+                <div class="scene-header">
+                    <div class="scene-title">SCENE 5 — Governance in Action</div>
+                    <div class="scene-time">1:12 – 1:32</div>
+                </div>
+                <div class="narration-box">
+                    <span class="narration-label">Narration</span>
+                    “Inside, Sheikh Mubarak would sit daily…”
+                </div>
+                <div class="ar-details">
+                    <h4>AR Overlay</h4>
+                    <ul>
+                        <li>Minimal animated actions: Merchant approaching, Gesture of discussion</li>
+                        <li>Map of Kuwait with trade routes briefly appearing</li>
+                        <li>Ambient market sound increases slightly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 6 -->
+        <div class="scene-row">
+            <div class="scene-marker"></div>
+            <div class="scene-deco">
+                <div class="raw-req-text">
+                    <span class="raw-req-label">Raw Requirement Data</span>
+                    Time: 1:32 – 1:48<br>
+                    Narration: “This was not merely an administrative building…”<br><br>
+                    AR Overlay:<br>
+                    - Kiosk highlighted with soft golden aura<br>
+                    - Floating words appear slowly, one by one: Leadership, Wisdom, Connection<br>
+                    - Words dissolve gently into the building
+                </div>
+            </div>
+            <div class="scene-content">
+                <div class="scene-image-frame">
+                    <img src="Scene_Art_V1/scene_06.png" alt="Scene 6 Visual" class="scene-img">
+                </div>
+                <div class="scene-header">
+                    <div class="scene-title">SCENE 6 — Symbol of Leadership</div>
+                    <div class="scene-time">1:32 – 1:48</div>
+                </div>
+                <div class="narration-box">
+                    <span class="narration-label">Narration</span>
+                    “This was not merely an administrative building…”
+                </div>
+                <div class="ar-details">
+                    <h4>AR Overlay</h4>
+                    <ul>
+                        <li>Kiosk highlighted with soft golden aura</li>
+                        <li>Floating words: <strong>Leadership, Wisdom, Connection</strong></li>
+                        <li>Words dissolve gently into the building</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 7 -->
+        <div class="scene-row">
+            <div class="scene-marker"></div>
+            <div class="scene-deco">
+                <div class="raw-req-text">
+                    <span class="raw-req-label">Raw Requirement Data</span>
+                    Time: 1:40 – 2:10<br>
+                    Narration: “Over time… this small structure became a powerful symbol.”<br><br>
+                    AR Overlay:<br>
+                    - Seamless blend back to present day<br>
+                    - Kuwaiti flag colors subtly reflected as light (not literal flag)
+                </div>
+            </div>
+            <div class="scene-content">
+                <div class="scene-image-frame">
+                    <img src="Scene_Art_V1/scene_07.png" alt="Scene 7 Visual" class="scene-img">
+                </div>
+                <div class="scene-header">
+                    <div class="scene-title">SCENE 7 — Then & Now</div>
+                    <div class="scene-time">1:40 – 2:10</div>
+                </div>
+                <div class="narration-box">
+                    <span class="narration-label">Narration</span>
+                    “Over time… this small structure became a powerful symbol.”
+                </div>
+                <div class="ar-details">
+                    <h4>AR Overlay</h4>
+                    <ul>
+                        <li>Seamless blend back to present day</li>
+                        <li>Kuwaiti flag colors subtly reflected as light</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 8 -->
+        <div class="scene-row">
+            <div class="scene-marker"></div>
+            <div class="scene-deco">
+                <div class="raw-req-text">
+                    <span class="raw-req-label">Raw Requirement Data</span>
+                    Time: 2:10 – End<br>
+                    Narration: “A history that remains alive…”<br><br>
+                    AR Overlay:<br>
+                    - All effects slowly fade, only the real kiosk remains<br>
+                    - Semi-transparent golden light outline traces the real kiosk for 10 seconds then disappears<br>
+                    - Final minimal text appears: A living witness to Kuwait’s history<br>
+                    - Experience ends automatically
+                </div>
+            </div>
+            <div class="scene-content">
+                <div class="scene-image-frame">
+                    <img src="Scene_Art_V1/scene_08.png" alt="Scene 8 Visual" class="scene-img">
+                </div>
+                <div class="scene-header">
+                    <div class="scene-title">SCENE 8 — Closing Moment</div>
+                    <div class="scene-time">2:10 – End</div>
+                </div>
+                <div class="narration-box">
+                    <span class="narration-label">Narration</span>
+                    “A history that remains alive…”
+                </div>
+                <div class="ar-details">
+                    <h4>AR Overlay</h4>
+                    <ul>
+                        <li>All effects slowly fade; only real kiosk remains</li>
+                        <li>Semi-transparent golden light outline traces kiosk (10s)</li>
+                        <li>Final text: <strong>A living witness to Kuwait’s history</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="visual-footer">
+        <h2>Visual Language Summary</h2>
+        <div class="style-grid">
+            <div class="style-item">
+                <h4>Colors</h4>
+                <div class="color-palette">
+                    <div class="swatch" style="background: #F4E4BC;" title="Sand"></div>
+                    <div class="swatch" style="background: #C5A059;" title="Gold"></div>
+                    <div class="swatch" style="background: #FDFBF7;" title="Warm White"></div>
+                </div>
+                <p style="margin-top:10px; font-size:0.9rem; opacity:0.8;">Sand, Gold, Warm White</p>
+            </div>
+            <div class="style-item">
+                <h4>Style</h4>
+                <p style="font-size:0.9rem; opacity:0.8;">Elegant, Restrained, Cinematic</p>
+            </div>
+            <div class="style-item">
+                <h4>Motion</h4>
+                <p style="font-size:0.9rem; opacity:0.8;">Slow, Intentional, Museum-calm</p>
+            </div>
+            <div class="style-item">
+                <h4>Text</h4>
+                <p style="font-size:0.9rem; opacity:0.8;">Minimal, Elegant, No clutter</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleTheme() {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme');
+        if (current === 'dark') {
+            html.setAttribute('data-theme', 'light');
+        } else {
+            html.setAttribute('data-theme', 'dark');
+        }
+    }
+
+    // Visual Version Switcher
+    const sceneFiles = [
+        "scene_01.png", "scene_02.png", "scene_03.png", "scene_04.png",
+        "scene_05.png", "scene_06.png", "scene_07.png", "scene_08.png"
+    ];
+
+    function switchVersion(ver) {
+        const folder = `Scene_Art_V${ver}`;
+        const images = document.querySelectorAll('.scene-img');
+        
+        images.forEach((img, index) => {
+            if (sceneFiles[index]) {
+                img.src = `${folder}/${sceneFiles[index]}`;
+            }
+        });
+
+        // Update active button state
+        document.querySelectorAll('.ver-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`btn-v${ver}`).classList.add('active');
+    }
+</script>
+
+</body>
+</html>

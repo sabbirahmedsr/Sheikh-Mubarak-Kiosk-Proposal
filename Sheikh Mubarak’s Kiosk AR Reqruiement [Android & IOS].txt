@@ -1,0 +1,136 @@
+Platform: Mobile AR (iOS / Android) 
+Mode: Marker-based or Geo-anchored (monument-triggered) 
+Experience Length: ~2:35 – 2:45 minutes 
+User Action: Point camera at the kiosk → Experience begins automatically 
+
+🎬 SCENE 1 — Arrival & Discovery 
+Time: 0:00 – 0:23 
+Narration: 
+“In a quiet corner of Kuwait’s old city…” 
+
+AR Overlay 
+Soft animated dust particles floating slowly (time awakening effect) 
+
+Semi-transparent golden light outline traces the real kiosk 
+
+Subtle text appears (minimal, elegant): 
+Sheikh Mubarak’s Kiosk 
+Kuwait  
+
+Design note: 
+No UI clutter. Let the real building dominate. 
+
+ 
+
+🎬 SCENE 2 — Time Transition (1897) 
+
+Time: 0:23– 0:40 
+Narration: 
+“The story begins in 1897…” 
+
+AR Overlay 
+Floating date appears briefly: 
+1897 
+
+Time ripple effect (gentle wave passes over the building) 
+
+Color grading shifts: 
+Modern tones → sepia / warm sand 
+
+Old-style map lines faintly overlay the ground 
+
+This visually signals historical immersion. 
+
+ 🎬 SCENE 3 — Purpose of the Kiosk 
+
+Time: 0:40– 0:55 
+Narration: 
+“He did not seek a grand palace…” 
+
+AR Overlay 
+Ghosted silhouettes fade in and out: 
+People standing nearby 
+Sheikh Mubarak standing at door (no facial detail – respectful abstraction) 
+
+Key message: leadership through proximity, not grandeur. 
+
+🎬 SCENE 4 — Architecture & Environment 
+
+Time: 0:55– 1:12 
+Narration: 
+“The kiosk was designed in the traditional Kuwaiti style…” 
+
+AR Overlay 
+Interactive architectural callouts (fade-in, fade-out): 
+Thick walls → heat protection 
+Windows → market & sea 
+
+Background AR layers: 
+Moving clouds 
+Boat sales appear behind building 
+
+🎬 SCENE 5 — Governance in Action 
+
+Time: 1:12– 1:32 
+Narration: 
+“Inside, Sheikh Mubarak would sit daily…” 
+
+AR Overlay 
+Minimal animated actions: 
+Merchant silhouette approaching 
+Gesture of discussion 
+Map of kuwait with trade routes briefly appearing 
+Ambient market sound increases slightly 
+
+Keep silhouettes abstract—no realism overload. 
+
+🎬 SCENE 6 — Symbol of Leadership 
+
+Time: 1:32– 1:48 
+Narration: 
+“This was not merely an administrative building…” 
+
+AR Overlay 
+Kiosk highlighted with soft golden aura 
+Floating words appear slowly, one by one: 
+Leadership 
+Wisdom 
+Connection 
+Words dissolve gently into the building 
+
+🎬 SCENE 7 — Then & Now 
+
+Time: 1:40 – 2:10 
+Narration: 
+“Over time… this small structure became a powerful symbol.” 
+
+AR Overlay 
+Seamless blend back to present day 
+Kuwaiti flag colors subtly reflected as light (not literal flag) 
+
+🎬 SCENE 8 — Closing Moment 
+
+Time: 2:10 – End 
+Narration: 
+“A history that remains alive…” 
+
+AR Overlay 
+All effects slowly fade 
+Only the real kiosk remains 
+Semi-transparent golden light outline traces the real kiosk for 10 seconds then disappears 
+
+Final minimal text appears: 
+A living witness to Kuwait’s history 
+Experience ends automatically 
+
+🎨 Visual Language Summary 
+
+Colors: Sand, gold, warm white 
+
+Style: Elegant, restrained, cinematic 
+
+Motion: Slow, intentional, museum-calm 
+
+Text: Minimal, never explanatory paragraphs 
+
+ 
